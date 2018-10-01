@@ -338,6 +338,26 @@ Node** Linked::toArray(){
     return array;    
 }
 
+void Linked::callMerge(){
+    int i;
+    Node** array;
+    Node* aux;
+    array = toArray();
+    mergeSort(array, 0, n_nodes-1);
+    
+    aux = array[0];
+    first = aux;
+    first->setPrev(NULL);
+    for(i=1; i < n_nodes-1; i++){
+        aux->setNext(array[i]);
+        aux->getNext()->setPrev(aux);
+        aux = aux->getNext();
+    }
+    aux->setNext(array[i]);  
+    aux->getNext()->setPrev(aux);
+    aux->getNext()->setNext(NULL);
+}
+
 void Linked::mergeSort(Node** array, int begin, int end){
     int pivot;
     pivot = (begin+end)/2;

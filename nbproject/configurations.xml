@@ -6,7 +6,6 @@
                    projectFiles="true">
       <itemPath>Element.h</itemPath>
       <itemPath>Linked.h</itemPath>
-      <itemPath>Menu.h</itemPath>
       <itemPath>Node.h</itemPath>
       <itemPath>Sequential.h</itemPath>
     </logicalFolder>
@@ -53,8 +52,6 @@
       </item>
       <item path="Linked.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="Menu.h" ex="false" tool="3" flavor2="0">
-      </item>
       <item path="Node.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Node.h" ex="false" tool="3" flavor2="0">
@@ -93,8 +90,6 @@
       <item path="Linked.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Linked.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="Menu.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="Node.cpp" ex="false" tool="1" flavor2="0">
       </item>

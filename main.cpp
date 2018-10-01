@@ -24,12 +24,10 @@ int main() {
     lin.insertEnd("otavio", 8);
     lin.insertEnd("otavio", 8);
     lin.insertEnd("otavio", 6);*/
-    lin.importTxt("NomeRG10.txt");
-    array = lin.toArray();    
-    lin.mergeSort(array, 0, 6);      
     
-    for(i=0; i<6; i++)
-        cout << array[i]->getRg() << endl;
+    lin.importTxt("NomeRG10.txt");  
+    lin.callMerge();
+    lin.showList();   
     
     /*lin.insertEnd("otavio", 6);
     lin.insertEnd("otavio", 1); */

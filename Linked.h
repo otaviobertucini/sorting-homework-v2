@@ -27,6 +27,7 @@ public:
     void printInfo(char* name, int rg, long c, long m, 
          double time, char* action);
     Node** toArray();
+    void callMerge();
 private:
     void merge(Node** array, int begin, int pivot, int end);
     Node* getIndex(int index);
