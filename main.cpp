@@ -11,23 +11,23 @@ int main() {
     
     /*Sequential seq;
     seq.importTxt("NomeRG10.txt");
-    seq.mergeSort(0, 9);
+    seq.bubble();
     seq.showList();*/
     
-    int i;
-    Node** array;
+//    int i;
+//    Node** array;
     Linked lin;
     /*lin.insertEnd("otavio", 12);
     lin.insertEnd("otavio", 3);
     lin.insertEnd("otavio", 1);
-    lin.insertEnd("otavio", 1);
-    lin.insertEnd("otavio", 8);
-    lin.insertEnd("otavio", 8);
-    lin.insertEnd("otavio", 6);*/
-    
-    lin.importTxt("NomeRG10.txt");  
-    lin.callMerge();
-    lin.showList();   
+    lin.insertEnd("otavio", 8);*/
+//    lin.insertEnd("otavio", 8);
+//    lin.insertEnd("otavio", 8);
+//    lin.insertEnd("otavio", 6);
+//    
+    lin.importTxt("NomeRG10.txt");      
+    lin.bubble();
+    lin.showList();
     
     /*lin.insertEnd("otavio", 6);
     lin.insertEnd("otavio", 1); */

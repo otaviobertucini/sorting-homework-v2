@@ -40,6 +40,10 @@ int Element::getRg(){
     return rg;
 }
 
+void Element::sumPos(int n){
+    position += n;
+}
+
 Element::~Element() {
 }
 

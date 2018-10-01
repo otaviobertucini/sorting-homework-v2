@@ -1,6 +1,7 @@
 #include "Linked.h"
 #include <cstddef>
 #include <iostream>
+using namespace std;
 using std::cout;
 using std::endl;
 using std::fstream;
@@ -304,27 +305,62 @@ void Linked::insertion() {
     }
 }
 
-void Linked::swap(Node* node1, Node* node2) {
-    Node *aux_next, *aux_prev;
-    node2->getPrev()->setNext(node1);
+void Linked::swap(Node* node1, Node* node2) { 
+    if(node1->getNext() != node2){
+        Node *aux_next, *aux_prev;
+        node2->getPrev()->setNext(node1);
 
-    if (node1->getNext() != NULL)
-        node1->getNext()->setPrev(node2);
-    if (node2->getNext() != NULL)
-        node2->getNext()->setPrev(node1);
+        if (node1->getNext() != NULL)
+            node1->getNext()->setPrev(node2);
+        if (node2->getNext() != NULL)
+            node2->getNext()->setPrev(node1);
 
-    aux_next = node1->getNext();
-    node1->setNext(node2->getNext());
-    node2->setNext(aux_next);
+        aux_next = node1->getNext();
+        node1->setNext(node2->getNext());
+        node2->setNext(aux_next);
 
-    aux_prev = node2->getPrev();
-    node2->setPrev(node1->getPrev());
-    node1->setPrev(aux_prev);
-
+        aux_prev = node2->getPrev();
+        node2->setPrev(node1->getPrev());
+        node1->setPrev(aux_prev);
+    }
+    else{              
+        if(node1->getPrev() != NULL)
+            node1->getPrev()->setNext(node2);
+        if(node2->getNext() != NULL)
+            node2->getNext()->setPrev(node1);          
+        
+        node2->setPrev(node1->getPrev());        
+        node1->setNext(node2->getNext());        
+       
+        node2->setNext(node1);
+        node1->setPrev(node2);
+        
+    }
     if (node1 == first)
-        first = node2;
+        first = node2;       
     if (node2 == last)
         last = node1;
+}
+
+/*For some reason, if we aplly the same logic of sequential lists in linked
+ list we do not get in the same result. */
+void Linked::bubble() {
+    Node *node1, *node2;
+    int i, t = -1, len = n_nodes;
+    while (t != 0) {
+        t = 0;
+        node1 = first;
+        for (i = 0; i < len-1; i++) {
+            node2 = node1->getNext();
+            if (node1->getRg() > node2->getRg()) {
+                swap(node1, node2);
+                node1->sumPos(1);
+                node2->sumPos(-1);
+                t++;
+            }
+            node1 = node2;
+        }
+    }
 }
 
 Node** Linked::toArray(){    
@@ -402,7 +438,6 @@ void Linked::merge(Node** array, int begin, int pivot, int end){
         array[j] = aux[i];
         array[j]->setPos(j+1);
     }
-    //showList();
 }
 
 //void Linked::mergeSort(){

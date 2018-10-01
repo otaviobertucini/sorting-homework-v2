@@ -22,6 +22,7 @@ public:
     void showElement(Element element);
     void insertion();
     void mergeSort(int begin, int end);
+    void bubble();
     void importTxt(char* file);
     void exportTxt(char* file);
     int countLines(char* file);

@@ -386,6 +386,26 @@ void Sequential::insertion(){
     }
 }
 
+void Sequential::bubble(){
+    int t=-1, i;
+    Element aux;
+    int len = n_elements;
+    while(t != 0){
+        t = 0;
+        for(i=0; i<len-1; i++){
+            if(start[i].getRg() > start[i+1].getRg()){
+                aux = start[i];                
+                start[i] = start[i+1];                
+                start[i+1] = aux;
+                start[i].sumPos(-1);
+                start[i+1].sumPos(1);
+                t++;
+            }
+        }
+        len--;
+    }
+}
+
 void Sequential::showList(){
     int start_s=clock();
     

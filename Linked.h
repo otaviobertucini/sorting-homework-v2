@@ -5,6 +5,7 @@
 #include <fstream>
 #include <string>
 #include <stdlib.h>
+#include <exception>
 
 class Linked {
 public:

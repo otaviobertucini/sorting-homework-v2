@@ -11,6 +11,7 @@ public:
     char* getName();
     void setRg(int rg);
     int getRg();
+    void sumPos(int n);
 private:
     char name[30];
     int rg;
