@@ -9,14 +9,21 @@ using namespace std;
 
 int main() {  
     
-    /*Sequential seq;
+    Sequential seq;
     seq.importTxt("NomeRG10.txt");
-    seq.bubble();
-    seq.showList();*/
+    /*seq.insertEnd("cladui", 12);
+    seq.insertEnd("jair", 3);
+    seq.insertEnd("otavio", 1);
+    seq.insertEnd("maria", 8);*/
+    //seq.bubble();
+    seq.mergeSort(0,9);
+    //seq.showList();
+    seq.callBinarySearch(16531729);
+    //seq.showList();
     
 //    int i;
 //    Node** array;
-    Linked lin;
+    //Linked lin;
     /*lin.insertEnd("otavio", 12);
     lin.insertEnd("otavio", 3);
     lin.insertEnd("otavio", 1);
@@ -25,9 +32,10 @@ int main() {
 //    lin.insertEnd("otavio", 8);
 //    lin.insertEnd("otavio", 6);
 //    
-    lin.importTxt("NomeRG10.txt");      
-    lin.bubble();
-    lin.showList();
+    /*lin.importTxt("NomeRG10.txt");      
+    lin.callMerge();
+    lin.callBinarySearch(74243042);*/
+    //lin.showList();
     
     /*lin.insertEnd("otavio", 6);
     lin.insertEnd("otavio", 1); */

@@ -23,6 +23,8 @@ public:
     void insertion();
     void mergeSort(int begin, int end);
     void bubble();
+    void callBinarySearch(int rg);
+    Element* binarySearch(int rg, int begin, int end);
     void importTxt(char* file);
     void exportTxt(char* file);
     int countLines(char* file);

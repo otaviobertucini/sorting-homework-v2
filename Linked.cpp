@@ -440,27 +440,31 @@ void Linked::merge(Node** array, int begin, int pivot, int end){
     }
 }
 
-//void Linked::mergeSort(){
-//    int n, h, i;  
-//    for(n=2; n < n_nodes; n*=2){
-//        h = 0;
-//        for(i=0; i < (n_nodes/n)-1; ){
-//            merge(h, h+n-1);
-//            h += n;
-//            i++;
-//        }
-//        if(n_nodes - h == n)
-//            merge(h, h+n-1);
-//        else
-//            merge(h, n_nodes-1);        
-//    }
-//}
-//
-//void Linked::merge(int begin, int end){
-//    cout << "----------" << endl;
-//    cout << "De " << begin << " até " << end << endl;
-//    cout << "----------" << endl;
-//}
+/*void Linked::callBinarySearch(int rg){
+    Node* found = binarySearch(rg, first, last);
+    cout << "Pessoa: " << found->getName() << " encontrada!" << endl;
+}*/
+
+/*Node* Linked::binarySearch(int rg, Node* begin, Node* end){
+    Node* middle = split(begin, end);
+    if(middle->getRg() == rg)
+        return middle;
+    if(begin == end){
+        return NULL;
+    }
+    if(middle->getRg() < rg)
+        return binarySearch(rg, middle->getNext(), end);
+    return binarySearch(rg, begin, middle->getPrev());
+}*/
+
+/*Node* Linked::split(Node* node1, Node* node2){
+    Node *slow=first, *fast=first;
+    while(fast != NULL && fast->getNext() != NULL){
+        slow = slow->getNext();
+        fast = fast->getNext()->getNext();
+    }
+    return slow;
+}*/
 
 void Linked::exportTxt(char* name) {
     Node* aux = first;

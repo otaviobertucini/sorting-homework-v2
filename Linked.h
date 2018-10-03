@@ -29,10 +29,13 @@ public:
          double time, char* action);
     Node** toArray();
     void callMerge();
+    void callBinarySearch(int rg);
+    Node* binarySearch(int rg, Node* begin, Node* end);
 private:
     void merge(Node** array, int begin, int pivot, int end);
     Node* getIndex(int index);
     void swap(Node* node1, Node* node2);
+    Node* split(Node* node1, Node* node20);
     
     Node *first;
     Node *last;
