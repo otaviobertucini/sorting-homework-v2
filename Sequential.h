@@ -31,8 +31,11 @@ public:
     Element* newArray(int n, int* m);
     void printInfo(char* name, int rg, int c, int m, 
          double time, char* action);
+    void selection();
+    void quickSort();
 private:
     void merge(int begin, int pivot, int end);
+    void quick(int begin, int end);
     Element* start;
     int n_elements;
 };

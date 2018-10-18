@@ -261,6 +261,22 @@ Node* Linked::getIndex(int index) {
     return aux;
 }
 
+void Linked::selection(){
+    Node* i = first;    
+    Node *aux, *j;
+    while(i != NULL){
+        aux = i;
+        j = i->getNext();
+        while(j != NULL){            
+            if(j->getRg() < aux->getRg())
+                aux = j;
+            j = j->getNext();
+        }
+        swap(i, aux);
+        i = i->getNext();
+    }
+}
+
 void Linked::insertion() {
     Node* node = first->getNext();
     Node* curr = node->getNext();
@@ -306,8 +322,29 @@ void Linked::insertion() {
 }
 
 void Linked::swap(Node* node1, Node* node2) { 
+    if(node1 == node2)
+        return;
     if(node1->getNext() != node2){
-        Node *aux_next, *aux_prev;
+        Node* aux1 = node2->getNext();
+        Node* aux2 = node2->getPrev();
+        
+        node2->setPrev(node1->getPrev());
+        node2->setNext(node1->getNext());
+        
+        node1->setPrev(aux2);
+        node1->setNext(aux1);
+        
+        if(node2->getNext() != NULL)
+            node2->getNext()->setPrev(node2);
+        if(node2->getPrev() != NULL)
+            node2->getPrev()->setNext(node2);
+        
+        if(node1->getNext() != NULL)
+            node1->getNext()->setPrev(node1);
+        if(node1->getPrev() != NULL)
+            node1->getPrev()->setNext(node1);
+        
+        /*Node *aux_next, *aux_prev;
         node2->getPrev()->setNext(node1);
 
         if (node1->getNext() != NULL)
@@ -321,7 +358,7 @@ void Linked::swap(Node* node1, Node* node2) {
 
         aux_prev = node2->getPrev();
         node2->setPrev(node1->getPrev());
-        node1->setPrev(aux_prev);
+        node1->setPrev(aux_prev);*/
     }
     else{              
         if(node1->getPrev() != NULL)
@@ -339,7 +376,7 @@ void Linked::swap(Node* node1, Node* node2) {
     if (node1 == first)
         first = node2;       
     if (node2 == last)
-        last = node1;
+        last = node1;    
 }
 
 /*For some reason, if we aplly the same logic of sequential lists in linked
