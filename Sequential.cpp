@@ -390,13 +390,12 @@ void Sequential::merge(int begin, int pivot, int end){
     //showList();
 }
 
-//TODO: AJEITAR AS POSIÇÕES
 void Sequential::quickSort(){
     quick(0, n_elements-1);
 }
 
 void Sequential::quick(int begin, int end){
-    int i=begin, j=end, aux_pos;
+    int i=begin, j=end, aux_pos1, aux_pos2;
     Element aux;
     int pivot = start[(begin+end)/2].getRg();
     while(i<j){
@@ -406,12 +405,12 @@ void Sequential::quick(int begin, int end){
             j--;
         if(i<=j){
           aux = start[i];
-          aux_pos = start[i].getPos();
-          
+          aux_pos1 = aux.getPos();  
+          aux_pos2 = start[j].getPos();
           start[i] = start[j];    
-          start[i].setPos(start[j].getPos());
+          start[i].setPos(aux_pos1);
           start[j] = aux;
-          start[j].setPos(aux_pos);
+          start[j].setPos(aux_pos2);
           i++;
           j--;
         }
@@ -422,9 +421,8 @@ void Sequential::quick(int begin, int end){
         quick(i, end);
 }
 
-//TODO: FAZER AS POSIÇÕES FICAREM CERTAS
 void Sequential::selection(){
-    int i, j, p_smaller, aux_pos;
+    int i, j, p_smaller, aux_pos1, aux_pos2;
     Element aux;
     for(i=0; i<n_elements; i++){
         j = i+1;
@@ -433,13 +431,14 @@ void Sequential::selection(){
             if(start[j].getRg() < start[p_smaller].getRg()){
                 p_smaller = j;
             }
-        }
+        }        
         aux = start[i];
-        aux_pos = start[i].getPos();
-        start[i] = start[p_smaller];
-        start[i].setPos(start[p_smaller].getPos());
+        aux_pos1 = aux.getPos();  
+        aux_pos2 = start[p_smaller].getPos();
+        start[i] = start[p_smaller];    
+        start[i].setPos(aux_pos1);
         start[p_smaller] = aux;
-        start[p_smaller].setPos(aux_pos);
+        start[p_smaller].setPos(aux_pos2);
     }
 }
 

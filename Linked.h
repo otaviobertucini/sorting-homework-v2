@@ -21,6 +21,7 @@ public:
     void adjustPosition(Node* start, int amnt, long* m);
     void showList();
     void mergeSort(Node** array, int begin, int end);
+    void quick(Node** array, int begin, int end);
     void selection();
     void insertion();
     void bubble();
@@ -30,6 +31,8 @@ public:
          double time, char* action);
     Node** toArray();
     void callMerge();
+    void callQuick();
+    void quickSort();
 private:
     void merge(Node** array, int begin, int pivot, int end);
     Node* getIndex(int index);

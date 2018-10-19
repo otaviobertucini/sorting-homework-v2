@@ -343,22 +343,6 @@ void Linked::swap(Node* node1, Node* node2) {
             node1->getNext()->setPrev(node1);
         if(node1->getPrev() != NULL)
             node1->getPrev()->setNext(node1);
-        
-        /*Node *aux_next, *aux_prev;
-        node2->getPrev()->setNext(node1);
-
-        if (node1->getNext() != NULL)
-            node1->getNext()->setPrev(node2);
-        if (node2->getNext() != NULL)
-            node2->getNext()->setPrev(node1);
-
-        aux_next = node1->getNext();
-        node1->setNext(node2->getNext());
-        node2->setNext(aux_next);
-
-        aux_prev = node2->getPrev();
-        node2->setPrev(node1->getPrev());
-        node1->setPrev(aux_prev);*/
     }
     else{              
         if(node1->getPrev() != NULL)
@@ -429,6 +413,28 @@ void Linked::callMerge(){
     aux->setNext(array[i]);  
     aux->getNext()->setPrev(aux);
     aux->getNext()->setNext(NULL);
+    last = aux->getNext();
+}
+
+void Linked::callQuick(){
+    int i;
+    Node** array;
+    Node* aux;
+    array = toArray();
+    quick(array, 0, n_nodes-1);
+    
+    aux = array[0];
+    first = aux;
+    first->setPrev(NULL);
+    for(i=1; i < n_nodes-1; i++){
+        aux->setNext(array[i]);
+        aux->getNext()->setPrev(aux);
+        aux = aux->getNext();
+    }
+    aux->setNext(array[i]); 
+    aux->getNext()->setPrev(aux);
+    aux->getNext()->setNext(NULL);
+    last = aux->getNext();
 }
 
 void Linked::mergeSort(Node** array, int begin, int end){
@@ -477,31 +483,41 @@ void Linked::merge(Node** array, int begin, int pivot, int end){
     }
 }
 
-/*void Linked::callBinarySearch(int rg){
-    Node* found = binarySearch(rg, first, last);
-    cout << "Pessoa: " << found->getName() << " encontrada!" << endl;
-}*/
-
-/*Node* Linked::binarySearch(int rg, Node* begin, Node* end){
-    Node* middle = split(begin, end);
-    if(middle->getRg() == rg)
-        return middle;
-    if(begin == end){
-        return NULL;
+void Linked::quick(Node** array, int begin, int end){
+    int i=begin, j=end, aux_pos1, aux_pos2;
+    Node* aux;
+    int pivot = array[(begin+end)/2]->getRg();
+    while(i<j){
+        while(array[i]->getRg() < pivot)
+            i++;
+        while(array[j]->getRg() > pivot)
+            j--;
+        if(i<=j){
+            aux = array[i];
+            aux_pos1 = aux->getPos();  
+            aux_pos2 = array[j]->getPos();
+            array[i] = array[j];    
+            array[i]->setPos(aux_pos1);
+            array[j] = aux;
+            array[j]->setPos(aux_pos2);  
+            i++;
+            j--;
+        }
     }
-    if(middle->getRg() < rg)
-        return binarySearch(rg, middle->getNext(), end);
-    return binarySearch(rg, begin, middle->getPrev());
-}*/
+    if(begin < j)
+        quick(array, begin, j);
+    if(i < end)
+        quick(array, i, end);
+}
 
-/*Node* Linked::split(Node* node1, Node* node2){
+Node* Linked::split(Node* node1, Node* node2){
     Node *slow=first, *fast=first;
     while(fast != NULL && fast->getNext() != NULL){
         slow = slow->getNext();
         fast = fast->getNext()->getNext();
     }
     return slow;
-}*/
+}
 
 void Linked::exportTxt(char* name) {
     Node* aux = first;
