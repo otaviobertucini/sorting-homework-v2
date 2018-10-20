@@ -25,6 +25,7 @@ public:
     void selection();
     void insertion();
     void bubble();
+    void shell();
     void exportTxt(char* name);
     void importTxt(char* name);
     void printInfo(char* name, int rg, long c, long m, 

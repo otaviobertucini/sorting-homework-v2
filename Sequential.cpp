@@ -421,6 +421,22 @@ void Sequential::quick(int begin, int end){
         quick(i, end);
 }
 
+void Sequential::shell(){
+    int len, i;
+    Element aux;
+    len = (n_elements-1)/2;
+    while(len > 0){
+        for(i=0; i<(n_elements)-len; i++){
+            if(start[i].getRg() > start[i+len].getRg()){
+                aux = start[i];
+                start[i] = start[i+len];
+                start[i+len] = aux;
+            }
+        }
+        len /= 2;
+    }
+}
+
 void Sequential::selection(){
     int i, j, p_smaller, aux_pos1, aux_pos2;
     Element aux;

@@ -264,7 +264,7 @@ Node* Linked::getIndex(int index) {
 void Linked::selection(){
     Node* i = first;    
     Node *aux, *j;
-    while(i != NULL){
+    while(i->getNext() != NULL){
         aux = i;
         j = i->getNext();
         while(j != NULL){            
@@ -314,7 +314,6 @@ void Linked::insertion() {
                 }
             }
         }
-        showList();
         node = curr;
         if (curr != NULL)
             curr = curr->getNext();
@@ -324,6 +323,10 @@ void Linked::insertion() {
 void Linked::swap(Node* node1, Node* node2) { 
     if(node1 == node2)
         return;
+    if (node1 == first)
+        first = node2;       
+    if (node2 == last)
+        last = node1;
     if(node1->getNext() != node2){
         Node* aux1 = node2->getNext();
         Node* aux2 = node2->getPrev();
@@ -356,11 +359,7 @@ void Linked::swap(Node* node1, Node* node2) {
         node2->setNext(node1);
         node1->setPrev(node2);
         
-    }
-    if (node1 == first)
-        first = node2;       
-    if (node2 == last)
-        last = node1;    
+    }    
 }
 
 /*For some reason, if we aplly the same logic of sequential lists in linked
@@ -382,6 +381,25 @@ void Linked::bubble() {
             node1 = node2;
         }
     }
+}
+
+void Linked::shell(){
+//    int sub = 0;
+//    if(n_nodes %2 == 0)
+//        sub = 1;
+    int len = (n_nodes-1)/2;
+    Node *a, *b;
+    while(len > 0){
+        for(int i=0; i<(n_nodes)-len; i++){
+            a = getIndex(i);
+            b = getIndex(i+len);
+            if(a->getRg() > b->getRg()){
+                swap(a, b);
+            }
+        }
+        len /= 2;
+    }
+    insertion();
 }
 
 Node** Linked::toArray(){    
