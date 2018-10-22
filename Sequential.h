@@ -21,7 +21,7 @@ public:
     void showList();
     void showElement(Element element);
     void insertion();
-    void mergeSort(int begin, int end);
+    void mergeSort(int begin, int end, int* c, int* m);
     void bubble();
     void shell();
     void callBinarySearch(int rg);
@@ -32,11 +32,13 @@ public:
     Element* newArray(int n, int* m);
     void printInfo(char* name, int rg, int c, int m, 
          double time, char* action);
+    void printInfoSort(char* type, int c, int m, double time);
     void selection();
     void quickSort();
+    void merge();
 private:
-    void merge(int begin, int pivot, int end);
-    void quick(int begin, int end);
+    void merge(int begin, int pivot, int end, int* c, int* m);
+    void quick(int begin, int end, int* c, int* m);
     Element* start;
     int n_elements;
 };

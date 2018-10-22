@@ -342,43 +342,58 @@ void Sequential::exportTxt(char* name){
         cout << "Não foi possível abrir o arquivo!" << endl;
 }
 
-void Sequential::mergeSort(int begin, int end){
+void Sequential::merge(){
+    int start_s=clock(), c=0, m=0;
+    mergeSort(0, n_elements-1, &c, &m);
+    int stop_s=clock();
+    printInfoSort("merge", c, m, (stop_s-start_s)/double(CLOCKS_PER_SEC)*1000);
+}
+
+void Sequential::mergeSort(int begin, int end, int* c, int* m){
     int pivot;
     pivot = (begin+end)/2;
+    (*m)++;
     if(begin < end){
-        mergeSort(begin, pivot);
-        mergeSort(pivot+1, end);
-        merge(begin, pivot, end);
+        mergeSort(begin, pivot, c, m);
+        mergeSort(pivot+1, end, c, m);
+        merge(begin, pivot, end, c, m);
     }
 }
 
-void Sequential::merge(int begin, int pivot, int end){
-    
+void Sequential::merge(int begin, int pivot, int end, int* c, int* m){    
     int index1, index2, size, i, enter, j;
     index1 = begin;
     index2 = pivot+1;
     size = end-begin+1;
     Element* aux = new Element[size];
     enter = 1;
+    (*c) += 5;
     for(i=0; i<size; i++){
+        (*m)++;
         if((index1 <= pivot && index2 <= end) || enter){
-            enter = 0;            
+            enter = 0;
+            (*m)++;
             if(start[index1].getRg() < start[index2].getRg()){
                 aux[i] = start[index1];
+                (*c)++;
                 index1++;
             }
             else{
                 aux[i] = start[index2];
+                (*c)++;
                 index2++;
             }
         }
         else{
+            (*m)++;
             if(index1 <= pivot){
                 aux[i] = start[index1];
+                (*c)++;
                 index1++;
             }
             else{
                 aux[i] = start[index2];
+                (*c)++;
                 index2++;
             }
         }
@@ -386,23 +401,28 @@ void Sequential::merge(int begin, int pivot, int end){
     for(i=0, j=begin; i<size; i++, j++){
         start[j] = aux[i];
         start[j].setPos(j+1);
+        (*c) += 2;
     }
-    //showList();
 }
 
 void Sequential::quickSort(){
-    quick(0, n_elements-1);
+    int start_s=clock(), c=0, m=0;
+    quick(0, n_elements-1, &c, &m);
+    int stop_s=clock();
+    printInfoSort("quick", c, m, (stop_s-start_s)/double(CLOCKS_PER_SEC)*1000);
 }
 
-void Sequential::quick(int begin, int end){
+void Sequential::quick(int begin, int end, int* c, int* m){
     int i=begin, j=end, aux_pos1, aux_pos2;
     Element aux;
     int pivot = start[(begin+end)/2].getRg();
+    (*c)++;
     while(i<j){
         while(start[i].getRg() < pivot)
             i++;
         while(start[j].getRg() > pivot)
             j--;
+        (*m)++;
         if(i<=j){
           aux = start[i];
           aux_pos1 = aux.getPos();  
@@ -411,41 +431,59 @@ void Sequential::quick(int begin, int end){
           start[i].setPos(aux_pos1);
           start[j] = aux;
           start[j].setPos(aux_pos2);
+          (*c) += 7;
           i++;
           j--;
         }
     }
+    (*m)++;
     if(begin < j)
-        quick(begin, j);
+        quick(begin, j, c, m);
+    (*m)++;
     if(i < end)
-        quick(i, end);
+        quick(i, end, c, m);
 }
 
 void Sequential::shell(){
-    int len, i;
+    int start_s=clock(), c=0, m=0;
+    int len, i, aux_pos1, aux_pos2;
     Element aux;
     len = (n_elements-1)/2;
+    c++;
     while(len > 0){
         for(i=0; i<(n_elements)-len; i++){
+            m++;
             if(start[i].getRg() > start[i+len].getRg()){
                 aux = start[i];
+                aux_pos1 = start[i].getPos();
+                aux_pos2 = start[i+len].getPos();
                 start[i] = start[i+len];
+                start[i].setPos(aux_pos1);
                 start[i+len] = aux;
+                start[i+len].setPos(aux_pos2);
+                c += 7;
             }
         }
         len /= 2;
+        c++;
     }
+    int stop_s=clock();
+    printInfoSort("shell", c, m, (stop_s-start_s)/double(CLOCKS_PER_SEC)*1000);
 }
 
 void Sequential::selection(){
+    int start_s=clock(), c=0, m=0;
     int i, j, p_smaller, aux_pos1, aux_pos2;
     Element aux;
     for(i=0; i<n_elements; i++){
         j = i+1;
         p_smaller = i;
+        c += 2;
         for(j; j<n_elements; j++){
+            m++;
             if(start[j].getRg() < start[p_smaller].getRg()){
                 p_smaller = j;
+                c++;
             }
         }        
         aux = start[i];
@@ -455,43 +493,62 @@ void Sequential::selection(){
         start[i].setPos(aux_pos1);
         start[p_smaller] = aux;
         start[p_smaller].setPos(aux_pos2);
+        c += 7;
     }
+    int stop_s=clock();
+    printInfoSort("selection", c, m, 
+            (stop_s-start_s)/double(CLOCKS_PER_SEC)*1000);
 }
 
 void Sequential::insertion(){
+    int start_s=clock(), c=0, m=0;
     int i, j;
     Element n;
     for(i=1; i<n_elements; i++){
         n = start[i];
         j = i-1;
+        c += 2;
         while(j >= 0 && n.getRg() < start[j].getRg()){
+            m++;
             start[j+1] = start[j];
             start[j+1].setPos(j+2);
+            c += 2;
             j--;
         }
         start[j+1] = n;
         start[j+1].setPos(j+2);
+        c += 2;
     }
+    int stop_s=clock();
+    printInfoSort("insertion", c, m, 
+            (stop_s-start_s)/double(CLOCKS_PER_SEC)*1000);
 }
 
 void Sequential::bubble(){
+    int start_s=clock(), c=0, m=0;
     int t=-1, i;
     Element aux;
     int len = n_elements;
+    c++;
     while(t != 0){
         t = 0;
         for(i=0; i<len-1; i++){
+            m++;
             if(start[i].getRg() > start[i+1].getRg()){
                 aux = start[i];                
                 start[i] = start[i+1];                
                 start[i+1] = aux;
                 start[i].sumPos(-1);
                 start[i+1].sumPos(1);
+                c += 5;
                 t++;
             }
         }
         len--;
     }
+    int stop_s=clock();
+    printInfoSort("bubble", c, m, 
+            (stop_s-start_s)/double(CLOCKS_PER_SEC)*1000);
 }
 
 void Sequential::showList(){
@@ -532,6 +589,15 @@ void Sequential::printInfo(char* name, int rg, int c, int m,
     cout << "Tempo de execução: " << time << endl;
     cout << "Comparações: " << c << endl;
     cout << "Cópias: " << m << endl;
+    cout << "---------------------------------------------------" << endl;
+}
+
+void Sequential::printInfoSort(char* type, int c, int m, double time){
+    cout << "---------------------------------------------------" << endl; 
+    cout << "Ordenação " << type << " feita com sucesso!" << endl;
+    cout << "Comparações: " << m << endl;
+    cout << "Cópias: " << c << endl;
+    cout << "TEMPO TOTAL: " << time << endl;
     cout << "---------------------------------------------------" << endl;
 }
 

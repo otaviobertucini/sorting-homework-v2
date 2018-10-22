@@ -7,30 +7,15 @@ using std::cout;
 using std::endl;
 using namespace std;
 
-int main() {  
-    
-    /*Sequential seq;
-    seq.importTxt("NomeRG10.txt");*/
-    /*seq.insertEnd("cladui", 12);
-    seq.insertEnd("jair", 3);
-    seq.insertEnd("otavio", 1);
-    seq.insertEnd("maria", 8);
-    //seq.insertEnd("maria", 4);
-    //seq.insertEnd("maria", 7);
-    //seq.insertEnd("maria", 9);
-    //seq.insertEnd("maria", 10);
-    seq.insertEnd("maria", 2);
-    seq.insertEnd("maria", 5);*/
-    //seq.bubble();
-    //seq.mergeSort(0,9);
-    //seq.showList();
-    //seq.callBinarySearch(16531729);
-    /*seq.shell();
-    seq.showList();*/
+int main() {      
+    Sequential seq;
+    seq.importTxt("NomeRG10.txt");
+    seq.insertion();
+    seq.showList();
     
 //    int i;
 //    Node** array;
-    Linked lin;
+    //Linked lin;
     /*lin.insertEnd("otavio", 12);
     lin.insertEnd("otavio", 3);
     lin.insertEnd("otavio", 1);
@@ -44,8 +29,8 @@ int main() {
     /*lin.callMerge();
     lin.callBinarySearch(74243042);*/
     //lin.selection();
-    lin.selection();
-    lin.showList();
+    //lin.selection();
+    //lin.showList();
     
     /*lin.insertEnd("otavio", 6);
     lin.insertEnd("otavio", 1); */
