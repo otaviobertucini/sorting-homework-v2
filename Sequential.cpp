@@ -343,6 +343,9 @@ void Sequential::exportTxt(char* name){
 }
 
 void Sequential::merge(){
+    if(n_elements == 0 || n_elements == 1)
+        return;
+    
     int start_s=clock(), c=0, m=0;
     mergeSort(0, n_elements-1, &c, &m);
     int stop_s=clock();
@@ -406,6 +409,9 @@ void Sequential::merge(int begin, int pivot, int end, int* c, int* m){
 }
 
 void Sequential::quickSort(){
+    if(n_elements == 0 || n_elements == 1)
+        return;
+    
     int start_s=clock(), c=0, m=0;
     quick(0, n_elements-1, &c, &m);
     int stop_s=clock();
@@ -445,6 +451,9 @@ void Sequential::quick(int begin, int end, int* c, int* m){
 }
 
 void Sequential::shell(){
+    if(n_elements == 0 || n_elements == 1)
+        return;
+    
     int start_s=clock(), c=0, m=0;
     int len, i, aux_pos1, aux_pos2;
     Element aux;
@@ -472,6 +481,9 @@ void Sequential::shell(){
 }
 
 void Sequential::selection(){
+    if(n_elements == 0 || n_elements == 1)
+        return;
+    
     int start_s=clock(), c=0, m=0;
     int i, j, p_smaller, aux_pos1, aux_pos2;
     Element aux;
@@ -501,6 +513,9 @@ void Sequential::selection(){
 }
 
 void Sequential::insertion(){
+    if(n_elements == 0 || n_elements == 1)
+        return;
+    
     int start_s=clock(), c=0, m=0;
     int i, j;
     Element n;
@@ -525,6 +540,9 @@ void Sequential::insertion(){
 }
 
 void Sequential::bubble(){
+    if(n_elements == 0 || n_elements == 1)
+        return;
+    
     int start_s=clock(), c=0, m=0;
     int t=-1, i;
     Element aux;

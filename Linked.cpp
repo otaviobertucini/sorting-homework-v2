@@ -122,11 +122,12 @@ void Linked::removeBeg(long c, long m) {
     c++;
     if (n_nodes == 0)
         cout << "Não existe item para remover!" << endl;
-    else {
-        name = first->getName();
-        rg = first->getRg();
-        first = first->getNext();
-        first->setPrev(NULL);
+    else {        
+        name = first->getName();        
+        rg = first->getRg();        
+        first = first->getNext();   
+        if(first != NULL)
+            first->setPrev(NULL);
         m += 2;
         adjustPosition(first, -1, &m);
         n_nodes--;
@@ -265,6 +266,9 @@ Node* Linked::getIndex(int index) {
 }
 
 void Linked::selection(){
+    if(n_nodes == 0 || n_nodes == 1)
+        return;
+    
     int start_s=clock(), c=0, m=0;
     Node* i = first;    
     Node *aux, *j;
@@ -285,6 +289,9 @@ void Linked::selection(){
 }
 
 void Linked::insertion(int t) {
+    if(n_nodes == 0 || n_nodes == 1)
+        return;
+    
     int start_s=clock(), c=0, m=0;
     Node* node = first->getNext();
     Node* curr = node->getNext();
@@ -408,6 +415,9 @@ void Linked::swap(Node* node1, Node* node2, int* c, int* m) {
 /*For some reason, if we aplly the same logic of sequential lists in linked
  list we do not get in the same result. */
 void Linked::bubble() {
+    if(n_nodes == 0 || n_nodes == 1)
+        return;
+    
     int start_s=clock(), c=0, m=0;
     Node *node1, *node2;
     int i, t = -1, len = n_nodes;
@@ -432,6 +442,9 @@ void Linked::bubble() {
 }
 
 void Linked::shell(){
+    if(n_nodes == 0 || n_nodes == 1)
+        return;
+    
     int start_s=clock(), c=0, m=0;
     int len = (n_nodes-1)/2;
     Node *a, *b;
@@ -463,6 +476,9 @@ Node** Linked::toArray(){
 }
 
 void Linked::callMerge(){
+    if(n_nodes == 0 || n_nodes == 1)
+        return;
+    
     int start_s=clock(), c=0, m=0;
     int i;
     Node** array;
@@ -488,6 +504,9 @@ void Linked::callMerge(){
 }
 
 void Linked::callQuick(){
+    if(n_nodes == 0 || n_nodes == 1)
+        return;
+    
     int start_s=clock(), c=0, m=0;
     int i;
     Node** array;
