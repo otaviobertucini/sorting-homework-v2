@@ -18,12 +18,12 @@ public:
     void removeEnd(long = 0, long = 0);
     void removeIndex(int index);
     void searchRg(int rg);
-    void adjustPosition(Node* start, int amnt, long* m);
+    void adjustPosition(Node* start, int amnt, long* m=NULL);
     void showList();
-    void mergeSort(Node** array, int begin, int end);
-    void quick(Node** array, int begin, int end);
+    void mergeSort(Node** array, int begin, int end, int* c, int* m);
+    void quick(Node** array, int begin, int end, int* c, int* m);
     void selection();
-    void insertion();
+    void insertion(int t=0);
     void bubble();
     void shell();
     void exportTxt(char* name);
@@ -34,10 +34,12 @@ public:
     void callMerge();
     void callQuick();
     void quickSort();
+    void resetPosition();
+    void printInfoSort(char* type, int c, int m, double time);
 private:
-    void merge(Node** array, int begin, int pivot, int end);
+    void merge(Node** array, int begin, int pivot, int end, int* c, int* m);
     Node* getIndex(int index);
-    void swap(Node* node1, Node* node2);
+    void swap(Node* node1, Node* node2, int* c, int* m);
     Node* split(Node* node1, Node* node20);    
     Node *first;
     Node *last;

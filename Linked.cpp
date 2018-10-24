@@ -225,11 +225,14 @@ void Linked::searchRg(int rg) {
 }
 
 void Linked::adjustPosition(Node* start, int amnt, long* m) {
+    int count = 0;
     while (start != NULL) {
         start->sumPos(amnt);
         start = start->getNext();
-        (*m)++;
+        count++;
     }
+    if(m != NULL)
+        *m += count;
 }
 
 void Linked::showList() {
@@ -262,44 +265,55 @@ Node* Linked::getIndex(int index) {
 }
 
 void Linked::selection(){
+    int start_s=clock(), c=0, m=0;
     Node* i = first;    
     Node *aux, *j;
     while(i->getNext() != NULL){
         aux = i;
         j = i->getNext();
         while(j != NULL){            
-            if(j->getRg() < aux->getRg())
+            if(j->getRg() < j->getRg())
                 aux = j;
             j = j->getNext();
         }
-        swap(i, aux);
+        swap(i, aux, &c, &m);
         i = i->getNext();
     }
+    int stop_s=clock();
+    printInfoSort("selection", c, m, 
+            (stop_s-start_s)/double(CLOCKS_PER_SEC)*1000);
 }
 
-void Linked::insertion() {
+void Linked::insertion(int t) {
+    int start_s=clock(), c=0, m=0;
     Node* node = first->getNext();
     Node* curr = node->getNext();
     Node* prev;
     while (node != NULL) {
         prev = node->getPrev();
+        m++;
         if (prev->getRg() > node->getRg()) {
             prev->setNext(node->getNext());
+            m++;
             if (node->getNext() != NULL)
                 node->getNext()->setPrev(prev);
-            while (prev != NULL) {               
-                if (prev == first) {        
+            while (prev != NULL) {
+                m++;
+                if (prev == first) {
+                    m++;
                     if(prev->getRg() > node->getRg()){
                         first = node;                    
                         first->setPrev(NULL);
                         first->setNext(prev);
-                        prev->setPrev(first);                       
+                        prev->setPrev(first);  
+                        c += 4;
                     }
                     else{
                         node->setNext(first->getNext());
                         first->getNext()->setPrev(node);
                         first->setNext(node);
-                        node->setPrev(first);                        
+                        node->setPrev(first);    
+                        c += 4;
                     }
                     prev = NULL;
                 } else if (prev->getRg() < node->getRg()) {
@@ -308,6 +322,7 @@ void Linked::insertion() {
                     prev->setNext(node);
                     node->setPrev(prev);
                     prev = NULL;
+                    c += 5;
                 }
                 else if (prev->getRg() > node->getRg()){
                     prev = prev->getPrev();
@@ -315,18 +330,23 @@ void Linked::insertion() {
             }
         }
         node = curr;
+        m++;
         if (curr != NULL)
             curr = curr->getNext();
     }
+    resetPosition();
+    if(t == 0){
+    int stop_s=clock();
+    printInfoSort("insertion", c, m, 
+            (stop_s-start_s)/double(CLOCKS_PER_SEC)*1000);
+    }
 }
 
-void Linked::swap(Node* node1, Node* node2) { 
+void Linked::swap(Node* node1, Node* node2, int* c, int* m) { 
+    (*m)++;
     if(node1 == node2)
         return;
-    if (node1 == first)
-        first = node2;       
-    if (node2 == last)
-        last = node1;
+    (*m)++;
     if(node1->getNext() != node2){
         Node* aux1 = node2->getNext();
         Node* aux2 = node2->getPrev();
@@ -336,35 +356,59 @@ void Linked::swap(Node* node1, Node* node2) {
         
         node1->setPrev(aux2);
         node1->setNext(aux1);
-        
-        if(node2->getNext() != NULL)
+        (*c) += 6;
+        (*m)++;
+        if(node2->getNext() != NULL){
             node2->getNext()->setPrev(node2);
-        if(node2->getPrev() != NULL)
+            (*c)++;
+        }
+        (*m)++;
+        if(node2->getPrev() != NULL){
             node2->getPrev()->setNext(node2);
-        
-        if(node1->getNext() != NULL)
+            (*c)++;
+        }
+        (*m)++;
+        if(node1->getNext() != NULL){
             node1->getNext()->setPrev(node1);
-        if(node1->getPrev() != NULL)
+            (*c)++;
+        }
+        (*m)++;
+        if(node1->getPrev() != NULL){
             node1->getPrev()->setNext(node1);
+            (*c)++;
+        }
     }
-    else{              
-        if(node1->getPrev() != NULL)
+    else{
+        (*m)++;
+        if(node1->getPrev() != NULL){
             node1->getPrev()->setNext(node2);
-        if(node2->getNext() != NULL)
-            node2->getNext()->setPrev(node1);          
+            (*c)++;
+        }
+        (*m)++;
+        if(node2->getNext() != NULL){
+            node2->getNext()->setPrev(node1); 
+            (*c)++;
+        }
         
         node2->setPrev(node1->getPrev());        
         node1->setNext(node2->getNext());        
        
         node2->setNext(node1);
         node1->setPrev(node2);
-        
-    }    
+        (*c) += 4;
+    }   
+    (*m)++;
+    if (node1 == first)
+        first = node2;  
+    (*m)++;
+    if (node2 == last)
+        last = node1;
 }
 
 /*For some reason, if we aplly the same logic of sequential lists in linked
  list we do not get in the same result. */
 void Linked::bubble() {
+    int start_s=clock(), c=0, m=0;
     Node *node1, *node2;
     int i, t = -1, len = n_nodes;
     while (t != 0) {
@@ -372,8 +416,9 @@ void Linked::bubble() {
         node1 = first;
         for (i = 0; i < len-1; i++) {
             node2 = node1->getNext();
+            m++;
             if (node1->getRg() > node2->getRg()) {
-                swap(node1, node2);
+                swap(node1, node2, &c, &m);
                 node1->sumPos(1);
                 node2->sumPos(-1);
                 t++;
@@ -381,12 +426,13 @@ void Linked::bubble() {
             node1 = node2;
         }
     }
+    int stop_s=clock();
+    printInfoSort("bubble", c, m, 
+            (stop_s-start_s)/double(CLOCKS_PER_SEC)*1000);
 }
 
 void Linked::shell(){
-//    int sub = 0;
-//    if(n_nodes %2 == 0)
-//        sub = 1;
+    int start_s=clock(), c=0, m=0;
     int len = (n_nodes-1)/2;
     Node *a, *b;
     while(len > 0){
@@ -394,12 +440,15 @@ void Linked::shell(){
             a = getIndex(i);
             b = getIndex(i+len);
             if(a->getRg() > b->getRg()){
-                swap(a, b);
+                swap(a, b, &c, &m);
             }
         }
         len /= 2;
     }
-    insertion();
+    insertion(1);
+    int stop_s=clock();
+    printInfoSort("shell", c, m, 
+            (stop_s-start_s)/double(CLOCKS_PER_SEC)*1000);
 }
 
 Node** Linked::toArray(){    
@@ -414,11 +463,12 @@ Node** Linked::toArray(){
 }
 
 void Linked::callMerge(){
+    int start_s=clock(), c=0, m=0;
     int i;
     Node** array;
     Node* aux;
     array = toArray();
-    mergeSort(array, 0, n_nodes-1);
+    mergeSort(array, 0, n_nodes-1, &c, &m);
     
     aux = array[0];
     first = aux;
@@ -432,14 +482,18 @@ void Linked::callMerge(){
     aux->getNext()->setPrev(aux);
     aux->getNext()->setNext(NULL);
     last = aux->getNext();
+    int stop_s=clock();
+    printInfoSort("merge", c, m, 
+            (stop_s-start_s)/double(CLOCKS_PER_SEC)*1000);
 }
 
 void Linked::callQuick(){
+    int start_s=clock(), c=0, m=0;
     int i;
     Node** array;
     Node* aux;
     array = toArray();
-    quick(array, 0, n_nodes-1);
+    quick(array, 0, n_nodes-1, &c, &m);
     
     aux = array[0];
     first = aux;
@@ -453,19 +507,23 @@ void Linked::callQuick(){
     aux->getNext()->setPrev(aux);
     aux->getNext()->setNext(NULL);
     last = aux->getNext();
+    int stop_s=clock();
+    printInfoSort("quick", c, m, 
+            (stop_s-start_s)/double(CLOCKS_PER_SEC)*1000);
 }
 
-void Linked::mergeSort(Node** array, int begin, int end){
+void Linked::mergeSort(Node** array, int begin, int end, int* c, int* m){
     int pivot;
     pivot = (begin+end)/2;
+    (*m)++;
     if(begin < end){
-        mergeSort(array, begin, pivot);
-        mergeSort(array, pivot+1, end);
-        merge(array, begin, pivot, end);
+        mergeSort(array, begin, pivot, c, m);
+        mergeSort(array, pivot+1, end, c, m);
+        merge(array, begin, pivot, end, c, m);
     }
 }
 
-void Linked::merge(Node** array, int begin, int pivot, int end){    
+void Linked::merge(Node** array, int begin, int pivot, int end, int* c, int* m){    
     int index1, index2, size, i, enter, j;
     index1 = begin;
     index2 = pivot+1;
@@ -473,24 +531,31 @@ void Linked::merge(Node** array, int begin, int pivot, int end){
     Node** aux = new Node*[size];
     enter = 1;    
     for(i=0; i<size; i++){
+        (*m)++;
         if((index1 <= pivot && index2 <= end) || enter){
-            enter = 0;            
+            enter = 0;    
+            (*m)++;
             if(array[index1]->getRg() < array[index2]->getRg()){
                 aux[i] = array[index1];
+                (*c)++;
                 index1++;
             }
             else{
                 aux[i] = array[index2];
+                (*c)++;
                 index2++;
             }
         }
         else{
+            (*m)++;
             if(index1 <= pivot){
                 aux[i] = array[index1];
+                (*c)++;
                 index1++;
             }
             else{
                 aux[i] = array[index2];
+                (*c)++;
                 index2++;
             }
         }
@@ -498,10 +563,11 @@ void Linked::merge(Node** array, int begin, int pivot, int end){
     for(i=0, j=begin; i<size; i++, j++){
         array[j] = aux[i];
         array[j]->setPos(j+1);
+        (*c)++;
     }
 }
 
-void Linked::quick(Node** array, int begin, int end){
+void Linked::quick(Node** array, int begin, int end, int* c, int* m){
     int i=begin, j=end, aux_pos1, aux_pos2;
     Node* aux;
     int pivot = array[(begin+end)/2]->getRg();
@@ -510,6 +576,7 @@ void Linked::quick(Node** array, int begin, int end){
             i++;
         while(array[j]->getRg() > pivot)
             j--;
+        (*m)++;
         if(i<=j){
             aux = array[i];
             aux_pos1 = aux->getPos();  
@@ -517,15 +584,18 @@ void Linked::quick(Node** array, int begin, int end){
             array[i] = array[j];    
             array[i]->setPos(aux_pos1);
             array[j] = aux;
-            array[j]->setPos(aux_pos2);  
+            array[j]->setPos(aux_pos2); 
+            (*c) += 7;
             i++;
             j--;
         }
     }
+    (*m)++;
     if(begin < j)
-        quick(array, begin, j);
+        quick(array, begin, j, c, m);
+    (*m)++;
     if(i < end)
-        quick(array, i, end);
+        quick(array, i, end, c, m);
 }
 
 Node* Linked::split(Node* node1, Node* node2){
@@ -535,6 +605,15 @@ Node* Linked::split(Node* node1, Node* node2){
         fast = fast->getNext()->getNext();
     }
     return slow;
+}
+
+void Linked::resetPosition(){
+    Node* aux = first;
+    for(int i = 0; i < n_nodes; i++){
+        aux->setPos(i+1);
+        aux = aux->getNext();
+    }
+        
 }
 
 void Linked::exportTxt(char* name) {
@@ -581,11 +660,11 @@ void Linked::importTxt(char* name) {
         cout << "---------------------------------------------------" << endl;
         cout << "Tempo de execução total (importar para encadeada): " <<
                 (stop_s - start_s) / double(CLOCKS_PER_SEC)*1000 << endl;
-        cout << "---------------------------------------------------" << endl;
+        cout << "---------------------------------------------------" << endl;        
     }
     else
         cout << "Não foi possível abrir o arquivo!" << endl;
-
+       
 }
 
 void Linked::printInfo(char* name, int rg, long c, long m,
@@ -597,6 +676,15 @@ void Linked::printInfo(char* name, int rg, long c, long m,
     cout << "Tempo de execução: " << time << endl;
     cout << "Comparações: " << c << endl;
     cout << "Cópias: " << m << endl;
+    cout << "---------------------------------------------------" << endl;
+}
+
+void Linked::printInfoSort(char* type, int c, int m, double time){
+    cout << "---------------------------------------------------" << endl; 
+    cout << "Ordenação " << type << " feita com sucesso!" << endl;
+    cout << "Comparações: " << m << endl;
+    cout << "Cópias: " << c << endl;
+    cout << "TEMPO TOTAL: " << time << endl;
     cout << "---------------------------------------------------" << endl;
 }
 
