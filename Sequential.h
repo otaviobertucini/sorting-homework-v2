@@ -25,7 +25,7 @@ public:
     void bubble();
     void shell();
     void callBinarySearch(int rg);
-    Element* binarySearch(int rg, int begin, int end);
+    Element* binarySearch(int rg, int begin, int end, int* c);
     void importTxt(char* file);
     void exportTxt(char* file);
     int countLines(char* file);

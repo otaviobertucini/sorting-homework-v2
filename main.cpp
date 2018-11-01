@@ -9,17 +9,17 @@ using std::endl;
 using namespace std;
 
 int main() {    
-    /*Menu menu;
-    menu.showMenu();*/
+    Menu menu;
+    menu.showMenu();
     
     /*Sequential seq;
     seq.importTxt("NomeRG10.txt");
     seq.insertion();
     seq.showList();*/
     
-    Linked lin;
+    /*Linked lin;
     lin.insertBeg("otavio", 84151841);
-    lin.removeBeg();
+    lin.removeBeg();*/
 
     return 0;
 }

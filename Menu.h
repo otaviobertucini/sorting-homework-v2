@@ -14,6 +14,7 @@ public:
     void add(int operation);
     void remove(int operation);
     void search();
+    void busca_binaria();
     void importar();
     void ordenar();
 private:

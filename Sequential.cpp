@@ -238,23 +238,30 @@ void Sequential::searchRg(int rg){
 }
 
 void Sequential::callBinarySearch(int rg){
-    Element* found = binarySearch(rg, 0, n_elements-1);
-    if(found != NULL)
-        cout << found->getName() << endl;
+    int c = 0;
+    Element* found = binarySearch(rg, 0, n_elements-1, &c);
+    if(found != NULL){
+        cout << "Nome: " << found->getName() << endl;
+        cout << "Posição: " << found->getPos() << endl;
+    }
+    cout << "Comparações: " << c << endl;
 }
 
-Element* Sequential::binarySearch(int rg, int begin, int end){
-    int middle = (begin + end)/2;    
+Element* Sequential::binarySearch(int rg, int begin, int end, int* c){
+    int middle = (begin + end)/2;  
+    (*c)++;
     if(start[middle].getRg() == rg){
         return &start[middle];
     }
+    (*c)++;
     if(begin == end){
         cout << "Elemento não encontrado!" << endl;
         return NULL;
     }
+    (*c)++;
     if(start[middle].getRg() < rg)
-        return binarySearch(rg, middle+1, end);
-    return binarySearch(rg, begin, middle-1);
+        return binarySearch(rg, middle+1, end, c);
+    return binarySearch(rg, begin, middle-1, c);
 }
 
 void Sequential::importTxt(char* file){

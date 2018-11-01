@@ -55,11 +55,11 @@ void Menu::showMenu(){
             search();
         else if(comando == 4){
             seq.showList();  
-            lin.showList();
+            //lin.showList();
         }
         else if(comando == 5){
             seq.exportTxt("export.txt");
-            lin.exportTxt("export2.txt");
+            //lin.exportTxt("export2.txt");
         }
         else if(comando == 6)
             importar();
@@ -67,12 +67,8 @@ void Menu::showMenu(){
             ordenar();
         else if(comando == 0)
             loop = 0;
-        /*else if(comando == 11){
-            seq.insertBeg("Otávio", "6160886");
-            seq.insertBeg("Jair", "459226");
-            seq.insertEnd("Cláudia", "1545455");
-            seq.insertIndex("Maria", "11111", 2);
-        }*/
+        else if(comando == 8)
+            busca_binaria();
     }
 }
 
@@ -86,18 +82,18 @@ void Menu::add(int operation){
     switch(operation){
         case 1:
             seq.insertBeg(name, rg);
-            lin.insertBeg(name, rg);
+            //lin.insertBeg(name, rg);
             break;
         case 2:
             seq.insertEnd(name, rg);
-            lin.insertEnd(name, rg);
+            //lin.insertEnd(name, rg);
             break;
         case 3:
             int index;
             cout << "Digite a posição: " << endl;
             cin >> index;
             seq.insertIndex(name, rg, index);
-            lin.insertIndex(name, rg, index);
+            //lin.insertIndex(name, rg, index);
             break;    
     }
 }
@@ -106,18 +102,18 @@ void Menu::remove(int operation){
         switch(operation){
         case 1:
             seq.removeBeg();
-            lin.removeBeg();
+            //lin.removeBeg();
             break;
         case 2:
             seq.removeEnd();
-            lin.removeEnd();
+            //lin.removeEnd();
             break;
         case 3:
             int index;
             cout << "Digite a posição: " << endl;
             cin >> index;
             seq.removeIndex(index);
-            lin.removeIndex(index);
+            //lin.removeIndex(index);
             break;    
     }
 }
@@ -127,7 +123,14 @@ void Menu::search(){
     cout << "Digite o RG que deseja procurar: " << endl;
     cin >> rg;
     seq.searchRg(rg);
-    lin.searchRg(rg);
+    //lin.searchRg(rg);
+}
+
+void Menu::busca_binaria(){
+    int rg;
+    cout << "Digite o RG que deseja procurar: " << endl;
+    cin >> rg;
+    seq.callBinarySearch(rg);
 }
 
 void Menu::importar(){
@@ -135,7 +138,7 @@ void Menu::importar(){
     cout << "Digite o nome do arquivo que deseja importar: " << endl;
     cin >> nome;
     seq.importTxt(nome);
-    lin.importTxt(nome);
+    //lin.importTxt(nome);
 }
 
 void Menu::ordenar(){
@@ -150,27 +153,27 @@ void Menu::ordenar(){
     switch(cmd){
         case 1:
             seq.selection();
-            lin.selection();
+            //lin.selection();
             break;
         case 2:
             seq.insertion();
-            lin.insertion(0);
+            //lin.insertion(0);
             break;
         case 3:
             seq.bubble();
-            lin.bubble();
+            //lin.bubble();
             break;
         case 4:
             seq.shell();
-            lin.shell();
+            //lin.shell();
             break;
         case 5:
             seq.quickSort();
-            lin.callQuick();
+            //lin.callQuick();
             break;
         case 6:
             seq.merge();
-            lin.callMerge();
+            //lin.callMerge();
             break;            
     }
 }
